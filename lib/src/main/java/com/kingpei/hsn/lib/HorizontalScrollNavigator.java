@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -33,11 +34,33 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
 
     private int mHeightDp = 40;
 
+    public LinearLayout getTabLayout() {
+        return mTabLayout;
+    }
+
     private LinearLayout mTabLayout;
 
     private final float mDensity;
 
     private final int mScreenWidth;
+
+    private OnLongClickListener mTabOnLongClickListener;
+
+    public void setIsTabDeleting(boolean isTabDeleting) {
+        this.mIsTabDeleting = isTabDeleting;
+
+        if(mViewPager instanceof HsnViewPager){
+            ((HsnViewPager) mViewPager).setNoScroll(mIsTabDeleting);
+        }
+    }
+
+    public boolean isTabDeleting() {
+        return mIsTabDeleting;
+    }
+
+    private boolean mIsTabDeleting = false;
+
+
 
     private OnClickListener mTabOnClickListener = new OnClickListener() {
         @Override
@@ -120,6 +143,10 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
 
             tb.setOnClickListener(mTabOnClickListener);
 
+            if(mTabOnLongClickListener != null){
+                tb.setOnLongClickListener(mTabOnLongClickListener);
+            }
+
             mTabLayout.addView(tb, i);
         }
 
@@ -127,7 +154,21 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
             mSelectedItemIndex = count - 1;
         }
 
-        setCurrentItem(mSelectedItemIndex);
+        if(mSelectedItemIndex < 0){
+            mSelectedItemIndex = 0;
+        }
+
+        if(!mIsTabDeleting) {
+            setCurrentItem(mSelectedItemIndex);
+        }
+    }
+
+    public void removeTabs(SparseBooleanArray booleanArray){
+        PagerAdapter adapter = mViewPager.getAdapter();
+        if(adapter instanceof TabDeletionManager.OnTabRemovedListener){
+            ((TabDeletionManager.OnTabRemovedListener) adapter).removeTabs(booleanArray);
+            mSelectedItemIndex = ((TabDeletionManager.OnTabRemovedListener) adapter).getCurrentIndex(booleanArray, mSelectedItemIndex);
+        }
     }
 
     private void setTabPaddings(int[] paddings){
@@ -206,4 +247,11 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    /** 设置标签长按事件处理 */
+    public void setOnTabLongClickListener(OnLongClickListener onLongClickListener){
+        mTabOnLongClickListener = onLongClickListener;
+    }
+
+
 }

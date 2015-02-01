@@ -3,9 +3,12 @@ package com.kingpei.hsn.sample.adapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.ViewGroup;
 
 import com.kingpei.hsn.lib.TabDeletionManager;
 import com.kingpei.hsn.sample.SampleFragment;
@@ -16,7 +19,7 @@ import java.util.Arrays;
 /**
  * Created by Administrator on 2015/1/30.
  */
-public class SamplePageAdapter extends FragmentStatePagerAdapter implements TabDeletionManager.OnTabRemovedListener{
+public class SamplePageAdapter extends FragmentPagerAdapter implements TabDeletionManager.OnTabRemovedListener{
 
     private static  final String TAG = SamplePageAdapter.class.getSimpleName();
 
@@ -35,7 +38,27 @@ public class SamplePageAdapter extends FragmentStatePagerAdapter implements TabD
         Bundle bundle = new Bundle();
         bundle.putString("content", tabTitles.get(position) + "内容");
         sampleFragment.setArguments(bundle);
+
+        Log.v(TAG, "getItem" + tabTitles.get(position));
         return sampleFragment;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+
+        if(fragment != null && fragment instanceof SampleFragment){
+            ((SampleFragment) fragment).setContent(tabTitles.get(position));
+        }
+
+        Log.v(TAG, "instantiateItem" + tabTitles.get(position));
+
+        return fragment;
+    };
+
+    @Override
+    public int getItemPosition(Object object) {
+        return PagerAdapter.POSITION_NONE;
     }
 
     @Override
@@ -66,6 +89,7 @@ public class SamplePageAdapter extends FragmentStatePagerAdapter implements TabD
 
         notifyDataSetChanged();
     }
+
 
     @Override
     public int getCurrentIndex(SparseBooleanArray booleanArray, int oldIndex) {

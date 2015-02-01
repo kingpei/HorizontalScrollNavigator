@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.ActionMode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -75,15 +74,5 @@ public class HorizotalScrollPlusNavigator extends LinearLayout{
     /** 设置管理标签的按钮点击打开的Activity */
     public void setPlusActivityClass(Class plusActivityClass){
         setPlusActivityClass(plusActivityClass, null);
-    }
-
-    /** 设置ActionMode的布局 */
-    public void setActionModeLayout(int layout){
-
-    }
-
-    /** 设置ActionMode的回调 */
-    public void setActionModeCallBack(ActionMode.Callback callBack){
-
     }
 }
