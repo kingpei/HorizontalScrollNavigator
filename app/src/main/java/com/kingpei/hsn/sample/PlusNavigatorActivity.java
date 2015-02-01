@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kingpei.hsn.lib.HorizotalScrollPlusNavigator;
+import com.kingpei.hsn.lib.TabDeletionManager;
 import com.kingpei.hsn.sample.adapter.SamplePageAdapter;
 
 
@@ -22,6 +23,9 @@ public class PlusNavigatorActivity extends FragmentActivity {
 
         HorizotalScrollPlusNavigator horizotalScrollPlusNavigator = (HorizotalScrollPlusNavigator) findViewById(R.id.activity_plus_navigator_horizontal_plus_navigate_sv);
         horizotalScrollPlusNavigator.getHorizontalScrollNavigator().setViewPager(viewPager);
+
+        TabDeletionManager tabDeletionManager = new TabDeletionManager(horizotalScrollPlusNavigator.getHorizontalScrollNavigator());
+        tabDeletionManager.init();
     }
 
 

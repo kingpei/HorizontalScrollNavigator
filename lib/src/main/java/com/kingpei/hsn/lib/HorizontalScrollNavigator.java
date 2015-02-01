@@ -177,20 +177,22 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
 
     /**  取消旧的当前项，设置新的当前项 */
     private void setCurrentItem(int item){
-        final TextView currentView = (TextView) mTabLayout.getChildAt(item);
-        int viewWidth = currentView.getMeasuredWidth();
-        int marginWidth = (int) (mDensity * (mTabMargins[0] + mTabMargins[1]));
-        int viewLeft = currentView.getLeft();
+        if(mTabLayout.getChildCount() != 0) {
+            final TextView currentView = (TextView) mTabLayout.getChildAt(item);
+            int viewWidth = currentView.getMeasuredWidth();
+            int marginWidth = (int) (mDensity * (mTabMargins[0] + mTabMargins[1]));
+            int viewLeft = currentView.getLeft();
 
 
-        int scrollDistance = viewWidth/2 + marginWidth/2 + viewLeft - mScreenWidth/8;
-        smoothScrollTo(scrollDistance, 0);
+            int scrollDistance = viewWidth / 2 + marginWidth / 2 + viewLeft - mScreenWidth / 8;
+            smoothScrollTo(scrollDistance, 0);
 
-        mTabLayout.getChildAt(mSelectedItemIndex).setSelected(false);
-        currentView.setSelected(true);
-        mViewPager.setCurrentItem(item);
+            mTabLayout.getChildAt(mSelectedItemIndex).setSelected(false);
+            currentView.setSelected(true);
+            mViewPager.setCurrentItem(item);
 
-        mSelectedItemIndex = item;
+            mSelectedItemIndex = item;
+        }
     }
 
 
