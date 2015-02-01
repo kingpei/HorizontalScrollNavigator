@@ -1,8 +1,8 @@
 package com.kingpei.hsn.sample;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,7 +10,7 @@ import com.kingpei.hsn.lib.HorizotalScrollPlusNavigator;
 import com.kingpei.hsn.sample.adapter.SamplePageAdapter;
 
 
-public class PlusNavigatorActivity extends ActionBarActivity {
+public class PlusNavigatorActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

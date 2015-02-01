@@ -14,11 +14,17 @@ import android.widget.TextView;
  */
 public class SampleFragment extends Fragment {
 
+//    public void setContent(String content) {
+//        this.mContent = content;
+//    }
+
     private String mContent;
 
-    public String getContent() {
-        return mContent;
-    }
+    private TextView mTextView;
+
+//    public String getContent() {
+//        return mContent;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,9 +35,9 @@ public class SampleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(mContent);
-        textView.setGravity(Gravity.CENTER);
-        return textView;
+        mTextView = new TextView(getActivity());
+        mTextView.setGravity(Gravity.CENTER);
+        mTextView.setText(mContent);
+        return mTextView;
     }
 }

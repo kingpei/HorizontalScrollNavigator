@@ -1,16 +1,17 @@
 package com.kingpei.hsn.sample;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kingpei.hsn.lib.HorizontalScrollNavigator;
+import com.kingpei.hsn.lib.TabDeletionManager;
 import com.kingpei.hsn.sample.adapter.SamplePageAdapter;
 
 
-public class NavigatorActivity extends ActionBarActivity {
+public class NavigatorActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,8 @@ public class NavigatorActivity extends ActionBarActivity {
         HorizontalScrollNavigator horizontalScrollNavigator = (HorizontalScrollNavigator) findViewById(R.id.activity_navigator_horizontal_navigate_sv);
         horizontalScrollNavigator.setViewPager(viewPager);
 
+        TabDeletionManager tabDeletionManager = new TabDeletionManager(horizontalScrollNavigator);
+        tabDeletionManager.init();
     }
 
 
