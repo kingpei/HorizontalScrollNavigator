@@ -44,10 +44,21 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
 
     private final int mScreenWidth;
 
+    private int mode = Mode.WRAP_CONTENT;
+
     private OnLongClickListener mTabOnLongClickListener;
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
 
     public void setIsTabDeleting(boolean isTabDeleting) {
         this.mIsTabDeleting = isTabDeleting;
+
 
         if(mViewPager instanceof HsnViewPager){
             ((HsnViewPager) mViewPager).setNoScroll(mIsTabDeleting);
@@ -73,6 +84,11 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
 
     public HorizontalScrollNavigator(Context context) {
         this(context, null);
+    }
+
+    @Override
+    public void addView(View child, int index) {
+        super.addView(child, index);
     }
 
     public HorizontalScrollNavigator(Context context, AttributeSet attrs) {
@@ -132,14 +148,21 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
             tb.setSingleLine();
             tb.setIndex(i);
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-            layoutParams.leftMargin = getPixelsNum(mTabMargins[0]);
-            layoutParams.topMargin = getPixelsNum(mTabMargins[1]);
-            layoutParams.rightMargin = getPixelsNum(mTabMargins[2]);
-            layoutParams.bottomMargin = getPixelsNum(mTabMargins[3]);
+            LinearLayout.LayoutParams layoutParams = null;
+            if(mode == Mode.WRAP_CONTENT){
+                layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+            }else if(mode == Mode.AVERAGE){
+                 layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+            }
 
+            if(layoutParams != null){
+                layoutParams.leftMargin = getPixelsNum(mTabMargins[0]);
+                layoutParams.topMargin = getPixelsNum(mTabMargins[1]);
+                layoutParams.rightMargin = getPixelsNum(mTabMargins[2]);
+                layoutParams.bottomMargin = getPixelsNum(mTabMargins[3]);
 
-            tb.setLayoutParams(layoutParams);
+                tb.setLayoutParams(layoutParams);
+            }
 
             tb.setOnClickListener(mTabOnClickListener);
 
@@ -255,5 +278,10 @@ public class HorizontalScrollNavigator extends HorizontalScrollView implements V
         mTabOnLongClickListener = onLongClickListener;
     }
 
+
+    public class Mode{
+        public static final int AVERAGE = 0;
+        public static final int WRAP_CONTENT = 1;
+    }
 
 }
